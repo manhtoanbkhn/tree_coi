@@ -1,5 +1,9 @@
+#ifndef TREE_COI_TREE_H
+#define TREE_COI_TREE_H
+
 #include <iostream>
 #include <vector>
+#include <memory>
 
 
 template <class Datatype>
@@ -134,3 +138,5 @@ void BinaryTree<Datatype>::Traversal(Node<Datatype>* node, TraversalType type, s
   }
 
 }
+
+#endif // TREE_COI_TREE_H
