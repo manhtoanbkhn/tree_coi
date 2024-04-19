@@ -4,50 +4,62 @@
 
 using BT_int = BinaryTree<int>;
 
-
-int main(int argc, char** argv) {
-
+void Test_Traversal() {
   BT_int tree(0);
 
   auto root = tree.Root();
 
-  tree.AddChildNode(root.get(), 1, BT_int::NodeType::LEFT);
-  tree.AddChildNode(root.get(), 2, BT_int::NodeType::RIGHT);
-  tree.AddChildNode(root->left.get(), 3, BT_int::NodeType::LEFT);
-  tree.AddChildNode(root->left.get(), 4, BT_int::NodeType::RIGHT);
-  tree.AddChildNode(root->right.get(), 5, BT_int::NodeType::LEFT);
-  tree.AddChildNode(root->right.get(), 6, BT_int::NodeType::RIGHT);
+  tree.AddChildNode(root, 1, BT_int::NodeType::LEFT);
+  tree.AddChildNode(root, 2, BT_int::NodeType::RIGHT);
+  tree.AddChildNode(root->left, 3, BT_int::NodeType::LEFT);
+  tree.AddChildNode(root->left, 4, BT_int::NodeType::RIGHT);
+  tree.AddChildNode(root->right, 5, BT_int::NodeType::LEFT);
+  tree.AddChildNode(root->right, 6, BT_int::NodeType::RIGHT);
 
 
-  std::vector<int> traversal;
-  tree.Traversal(root.get(), BT_int::TraversalType::IN_ORDER, traversal);
-  std::cout << "in order: ";
-  for (auto& x : traversal) {
-    std::cout << x << " ";
+  tree.Print(BT_int::TraversalType::IN_ORDER);
+  tree.Print(BT_int::TraversalType::PRE_ORDER);
+  tree.Print(BT_int::TraversalType::POST_ORDER);
+  tree.Print(BT_int::TraversalType::LEVEL_ORDER);
+}
+
+void Test_Insert() {
+
+  BT_int tree;
+  BT_int::TraversalType type = BT_int::TraversalType::LEVEL_ORDER;
+  tree.Print(type);
+
+  tree.Insert(0);
+  tree.Print(type);
+
+  auto root = tree.Root();
+  tree.AddChildNode(root, 1, BT_int::NodeType::LEFT);
+  tree.AddChildNode(root, 2, BT_int::NodeType::RIGHT);
+  tree.AddChildNode(root->left, 3, BT_int::NodeType::LEFT);
+  // tree.AddChildNode(root->left, 4, BT_int::NodeType::RIGHT);
+  tree.AddChildNode(root->right, 5, BT_int::NodeType::LEFT);
+  tree.AddChildNode(root->right, 6, BT_int::NodeType::RIGHT);
+
+  std::cout << "before insert" << std::endl;
+  tree.Print(type);
+  std::cout << "insert 4 into right of node 1" << std::endl;
+  tree.Insert(4);
+  tree.Print(type);
+  std::cout << "insert some nodes" << std::endl;
+  for (int i = 0; i < 10; ++i) {
+    tree.Insert(i);
   }
-  std::cout << std::endl;
+  std::cout << "expect: 0 1 2 3 4 5 6 0 1 2 3 4 5 6 7 8 9" << std::endl;
+  tree.Print(type);
+}
 
-  traversal.clear();
-  tree.Traversal(root.get(), BT_int::TraversalType::PRE_ORDER, traversal);
-  std::cout << "pre order: ";
-  for (auto& x : traversal) {
-    std::cout << x << " ";
-  }
-  std::cout << std::endl;
 
-  traversal.clear();
-  tree.Traversal(root.get(), BT_int::TraversalType::POST_ORDER, traversal);
-  std::cout << "post order: ";
-  for (auto& x : traversal) {
-    std::cout << x << " ";
-  }
-  std::cout << std::endl;
+int main(int argc, char** argv) {
 
-  traversal.clear();
-  tree.Traversal(root.get(), BT_int::TraversalType::LEVEL_ORDER, traversal);
-  std::cout << "level order: ";
-  for (auto& x : traversal) {
-    std::cout << x << " ";
-  }
-  std::cout << std::endl;
+  std::cout << "Test Traversal\n";
+  Test_Traversal();
+
+  std::cout << "\nTest Insert\n";
+  Test_Insert();
+
 }
